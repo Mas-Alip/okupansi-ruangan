@@ -1,0 +1,60 @@
+/**
+ * =================================================================
+ * CUSTOM ANIMATIONS & KEYFRAMES
+ * =================================================================
+ */
+
+/* Live Radar Pulse Effect */
+@keyframes pulseGlowRed {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 14px rgba(239, 68, 68, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+@keyframes pulseGlowGreen {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.pulse-red {
+    animation: pulseGlowRed 1.5s infinite;
+}
+
+.pulse-green {
+    animation: pulseGlowGreen 2s infinite;
+}
+
+/* Smooth Fade In Log Entry */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.log-animated {
+    animation: slideInLeft 0.3s ease-out forwards;
+}

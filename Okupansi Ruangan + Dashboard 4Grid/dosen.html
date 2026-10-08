@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presensi Kelas - Ruang J.101</title>
+    
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="glass-card p-4 p-md-5">
+                    
+                    <!-- Header Logo -->
+                    <div class="text-center mb-4">
+                        <img src="https://upstegal.ac.id/wp-content/uploads/2021/04/Logo-UPS-Tegal.png" alt="Logo UPS" height="55" class="mb-3">
+                        <h4 class="fw-bold text-white mb-1">PRESENSI PINTU KELAS</h4>
+                        <p class="text-primary fw-semibold small">Gedung FTIK - Ruang J.101</p>
+                    </div>
+
+                    <form id="formPerkuliahan">
+                        
+                        <!-- 1. Searchable Dropdown Dosen -->
+                        <div class="mb-3">
+                            <label class="form-label text-light small fw-bold"><i class="fa-solid fa-user-tie me-2 text-primary"></i>Pilih / Cari Nama Dosen</label>
+                            <input class="form-control bg-dark text-white border-secondary" list="listDosen" id="inputDosen" placeholder="Ketik/Pilih Nama Dosen..." required autocomplete="off">
+                            <datalist id="listDosen">
+                                <option value="Dr. Yamin, M.T.">
+                                <option value="Drs. M. Taufiq, M.Kom.">
+                                <option value="Ahmad Farhan, S.T., M.Eng.">
+                                <option value="Nurul Aini, M.Cs.">
+                                <option value="Alif Adji Shaputra, S.Kom.">
+                            </datalist>
+                        </div>
+
+                        <!-- 2. Searchable Dropdown Mata Kuliah -->
+                        <div class="mb-3">
+                            <label class="form-label text-light small fw-bold"><i class="fa-solid fa-book-open me-2 text-primary"></i>Pilih / Cari Mata Kuliah</label>
+                            <input class="form-control bg-dark text-white border-secondary" list="listMatkul" id="inputMatkul" placeholder="Ketik/Pilih Mata Kuliah..." required autocomplete="off">
+                            <datalist id="listMatkul">
+                                <option value="Internet of Things (IoT)">
+                                <option value="Sistem Tertanam & Mikrokontroler">
+                                <option value="Pemrograman Web Lanjut">
+                                <option value="Jaringan Komputer">
+                                <option value="Kecerdasan Buatan (AI)">
+                            </datalist>
+                        </div>
+
+                        <!-- 3. Dropdown Jam Sesi Kuliah (Satset) -->
+                        <div class="mb-4">
+                            <label class="form-label text-light small fw-bold"><i class="fa-solid fa-clock me-2 text-primary"></i>Pilih Jam Perkuliahan</label>
+                            <select id="inputJam" class="form-select bg-dark text-white border-secondary" required>
+                                <option value="" selected disabled>-- Pilih Sesi Jam Kuliah --</option>
+                                <option value="08:00 - 09:40 WIB">Sesi 1 (08:00 - 09:40 WIB)</option>
+                                <option value="09:40 - 11:20 WIB">Sesi 2 (09:40 - 11:20 WIB)</option>
+                                <option value="12:30 - 14:10 WIB">Sesi 3 (12:30 - 14:10 WIB)</option>
+                                <option value="14:10 - 15:50 WIB">Sesi 4 (14:10 - 15:50 WIB)</option>
+                                <option value="16:00 - 17:40 WIB">Sesi 5 (16:00 - 17:40 WIB)</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow-lg">
+                            <i class="fa-solid fa-paper-plane me-2"></i>SUBMIT PRESENSI KELAS
+                        </button>
+                    </form>
+
+                    <!-- Alert Notifikasi -->
+                    <div id="alertSuccess" class="alert alert-success mt-4 d-none text-center" role="alert">
+                        <i class="fa-solid fa-circle-check me-2"></i>Presensi Berhasil! Data terkirim ke Dashboard J.101.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK & Config -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="assets/js/firebase-config.js"></script>
+
+    <script>
+        const form = document.getElementById('formPerkuliahan');
+        const alertSuccess = document.getElementById('alertSuccess');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const dosen = document.getElementById('inputDosen').value;
+            const matkul = document.getElementById('inputMatkul').value;
+            const jam = document.getElementById('inputJam').value;
+
+            // Kirim Data ke Firebase Node /Ruangan/J101/info
+            database.ref('/Ruangan/J101/info').set({
+                dosen: dosen,
+                matkul: matkul,
+                jam: jam,
+                updatedAt: new Date().toLocaleTimeString('id-ID')
+            }).then(() => {
+                alertSuccess.classList.remove('d-none');
+                setTimeout(() => alertSuccess.classList.add('d-none'), 3000);
+            }).catch((error) => {
+                alert("Gagal mengirim data: " + error.message);
+            });
+        });
+    </script>
+</body>
+</html>

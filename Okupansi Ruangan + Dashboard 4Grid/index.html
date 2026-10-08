@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Okupansi Ruangan - FTIK UPS Tegal</title>
+
+    <!-- Google Fonts & Bootstrap 5 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-dark text-light">
+
+    <!-- NAVBAR HEADER -->
+    <nav class="navbar navbar-dark bg-black bg-opacity-50 border-bottom border-secondary px-4 py-3 sticky-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <img src="assets/img/Logo_Universitas_Pancasakti_Tegal.png" alt="Logo UPS" height="40">
+                <div>
+                    <h5 class="fw-bold mb-0 text-white">MONITORING OKUPANSI RUANG KELAS</h5>
+                    <small class="text-primary fw-semibold">Fakultas Teknik & Ilmu Komputer - UPS Tegal</small>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25 px-3 py-2 rounded-pill fs-7 fw-bold" id="digitalClock">
+                    00:00:00 WIB
+                </span>
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2 rounded-pill fs-7">
+                    <span id="livePulse" class="pulse-indicator green"></span>
+                    <span id="connectionStatus">FIREBASE CONNECTED</span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN DASHBOARD CONTENT (GRID 4 RUANGAN) -->
+    <div class="container my-4">
+        <div class="row g-4">
+
+            <!-- CARD 1: RUANG J.101 (LIVE HARDWARE ESP32) -->
+            <div class="col-md-6">
+                <div class="card bg-black border-secondary rounded-4 shadow-lg h-100 overflow-hidden">
+                    <div class="card-header bg-dark bg-opacity-50 border-bottom border-secondary d-flex justify-content-between align-items-center py-3">
+                        <h5 class="mb-0 fw-bold text-white"><i class="fa-solid fa-door-open me-2 text-primary"></i>RUANG J.101</h5>
+                        <span class="badge bg-success bg-opacity-25 text-success border border-success px-2 py-1 rounded-pill small">
+                            <i class="fa-solid fa-wifi me-1"></i>NODE LIVE
+                        </span>
+                    </div>
+                    <div class="card-body text-center p-4">
+                        <!-- Hero Box Status J.101 -->
+                        <div id="statusHeroJ101" class="status-hero kosong p-4 rounded-4 my-2">
+                            <h2 class="display-5 fw-bold mb-1" id="statusTextJ101">KOSONG</h2>
+                            <p class="mb-0 small fw-semibold" id="statusSubtitleJ101"><i class="fa-solid fa-shield-halved me-1"></i>Ruangan Siap Digunakan</p>
+                        </div>
+
+                        <!-- Info Detail Dosen J.101 -->
+                        <div id="statusDescJ101" class="text-start mt-3">
+                            <p class="small text-muted mb-0">Tidak ada aktivitas pergerakan terdeteksi di dalam ruangan.</p>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-dark bg-opacity-25 border-top border-secondary text-muted small py-2 text-end">
+                        Update Terakhir: <span id="lastUpdateJ101" class="text-white fw-semibold">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 2: RUANG J.102 (COMING SOON / EXPANSION SLOT) -->
+            <div class="col-md-6">
+                <div class="card bg-black bg-opacity-50 border-secondary rounded-4 shadow-lg h-100 opacity-75">
+                    <div class="card-header bg-dark bg-opacity-25 border-bottom border-secondary d-flex justify-content-between align-items-center py-3">
+                        <h5 class="mb-0 fw-bold text-secondary"><i class="fa-solid fa-door-closed me-2"></i>RUANG J.102</h5>
+                        <span class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary px-2 py-1 rounded-pill small">
+                            <i class="fa-solid fa-clock me-1"></i>COMING SOON
+                        </span>
+                    </div>
+                    <div class="card-body text-center p-4 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fa-solid fa-microchip display-4 text-secondary mb-3 opacity-50"></i>
+                        <h4 class="fw-bold text-secondary">SLOT EKSPANSI HARDWARE</h4>
+                        <p class="text-muted small mb-0 px-3">Modul Sensor ESP32 untuk Ruang J.102 dalam tahap persiapan integrasi node.</p>
+                    </div>
+                    <div class="card-footer bg-dark bg-opacity-25 border-top border-secondary text-muted small py-2 text-end">
+                        Status Node: Offline / Unmapped
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 3: RUANG J.103 (COMING SOON) -->
+            <div class="col-md-6">
+                <div class="card bg-black bg-opacity-50 border-secondary rounded-4 shadow-lg h-100 opacity-75">
+                    <div class="card-header bg-dark bg-opacity-25 border-bottom border-secondary d-flex justify-content-between align-items-center py-3">
+                        <h5 class="mb-0 fw-bold text-secondary"><i class="fa-solid fa-door-closed me-2"></i>RUANG J.103</h5>
+                        <span class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary px-2 py-1 rounded-pill small">
+                            <i class="fa-solid fa-clock me-1"></i>COMING SOON
+                        </span>
+                    </div>
+                    <div class="card-body text-center p-4 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fa-solid fa-microchip display-4 text-secondary mb-3 opacity-50"></i>
+                        <h4 class="fw-bold text-secondary">SLOT EKSPANSI HARDWARE</h4>
+                        <p class="text-muted small mb-0 px-3">Modul Sensor ESP32 untuk Ruang J.103 dalam tahap persiapan integrasi node.</p>
+                    </div>
+                    <div class="card-footer bg-dark bg-opacity-25 border-top border-secondary text-muted small py-2 text-end">
+                        Status Node: Offline / Unmapped
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 4: RUANG J.104 (COMING SOON) -->
+            <div class="col-md-6">
+                <div class="card bg-black bg-opacity-50 border-secondary rounded-4 shadow-lg h-100 opacity-75">
+                    <div class="card-header bg-dark bg-opacity-25 border-bottom border-secondary d-flex justify-content-between align-items-center py-3">
+                        <h5 class="mb-0 fw-bold text-secondary"><i class="fa-solid fa-door-closed me-2"></i>RUANG J.104</h5>
+                        <span class="badge bg-secondary bg-opacity-25 text-secondary border border-secondary px-2 py-1 rounded-pill small">
+                            <i class="fa-solid fa-clock me-1"></i>COMING SOON
+                        </span>
+                    </div>
+                    <div class="card-body text-center p-4 d-flex flex-column justify-content-center align-items-center">
+                        <i class="fa-solid fa-microchip display-4 text-secondary mb-3 opacity-50"></i>
+                        <h4 class="fw-bold text-secondary">SLOT EKSPANSI HARDWARE</h4>
+                        <p class="text-muted small mb-0 px-3">Modul Sensor ESP32 untuk Ruang J.104 dalam tahap persiapan integrasi node.</p>
+                    </div>
+                    <div class="card-footer bg-dark bg-opacity-25 border-top border-secondary text-muted small py-2 text-end">
+                        Status Node: Offline / Unmapped
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONSOLE LOG AUDIT BOTTOM -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card bg-black border-secondary rounded-4 p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small fw-bold text-primary"><i class="fa-solid fa-terminal me-2"></i>LIVE SYSTEM AUDIT LOG</span>
+                        <span class="badge bg-dark border border-secondary text-muted small">J.101 Active Stream</span>
+                    </div>
+                    <div id="consoleLog" class="bg-dark bg-opacity-50 p-3 rounded-3 text-monospace small" style="height: 120px; overflow-y: auto;">
+                        <div class="text-muted">[SYSTEM INITIALIZED] Ready listening to Firebase Cloud...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK & Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

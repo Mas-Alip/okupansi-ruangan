@@ -1,0 +1,18 @@
+{
+  "MasterData": {
+    "Dosen": [
+      "Dr. Yamin, M.T.",
+      "Drs. M. Taufiq, M.Kom.",
+      "Ahmad Farhan, S.T., M.Eng.",
+      "Nurul Aini, M.Cs.",
+      "Alif Adji Shaputra, S.Kom."
+    ],
+    "Matkul": [
+      "Internet of Things (IoT)",
+      "Sistem Tertanam & Mikrokontroler",
+      "Pemrograman Web Lanjut",
+      "Jaringan Komputer",
+      "Kecerdasan Buatan (AI)"
+    ]
+  }
+}
